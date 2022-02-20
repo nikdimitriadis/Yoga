@@ -24,6 +24,7 @@ export const TokenContentProvider = (props) => {
   }, []);
 
   const login = async (data) => {
+    console.log(data);
     try {
       const responseData = await sendRequest(
         "http://localhost:5000/login",
@@ -52,6 +53,7 @@ export const TokenContentProvider = (props) => {
     navigate("/");
   };
   const signup = async (data) => {
+    console.log(data.file);
     try {
       const responseData = await sendRequest(
         "http://localhost:5000/login",

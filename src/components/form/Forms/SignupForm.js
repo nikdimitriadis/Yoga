@@ -19,7 +19,7 @@ const SignupForm = () => {
     <>
       <form
         onSubmit={handleSubmit((data) => {
-          //   console.log("valid", authCtx.login);
+          console.log(data.picture[0].name);
           authCtx.signup(data);
           //   if(errors.)
         })}
@@ -52,6 +52,13 @@ const SignupForm = () => {
         />
         {errors.passwort?.message && (
           <p className={classes.error}>{errors.passwort?.message}</p>
+        )}
+        <input
+          /*ref={register}*/ {...register("picture")}
+          type="file" /*name="picture"*/
+        />
+        {errors.file?.message && (
+          <p className={classes.error}>{errors.file?.message}</p>
         )}
         <input type="submit" />
       </form>
