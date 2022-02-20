@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
+import TokenContent from "../../store/token-provider";
 import Logo from "../../components/UI/Logo";
 import LoadingSpinner from "../../components/UI/spinner/LoadingSpinner";
 import Card from "../../components/UI/Card/Card";
@@ -16,6 +17,7 @@ const Home = () => {
   const [fetchedMediMusic, setFetchedMediMusic] = useState([]);
   const [fetchedFavMusic, setFetchedFavMusic] = useState([]);
   const { isLoading, error, sendRequest } = useHttpClient();
+  const tokenCtx = useContext(TokenContent);
 
   let favoriteListContent;
   let swiperFavContent;
@@ -116,7 +118,7 @@ const Home = () => {
         {!error && isLoading && <LoadingSpinner asOverlay />}
         {!error && !isLoading && (
           <>
-            <h2>Good morning Leon</h2>
+            <h2>{`Good morning ${tokenCtx.name}`}</h2>
             <p className={classes.par}>We hope you have a good day</p>
             <div className={classes.recommented}>
               <h3>Favorite List</h3>

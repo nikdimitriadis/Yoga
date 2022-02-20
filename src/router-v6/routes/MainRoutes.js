@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import SignIn from "../pages/Sign";
@@ -11,21 +12,28 @@ import Profile from "../pages/Profile";
 import StartPage from "../pages/StartPage";
 import Welcome from "../pages/Welcome";
 import SignUp from "../pages/SignUp";
+import TokenContent from "../../store/token-provider";
 
 const MainRoutes = () => {
+  const tokenCtx = useContext(TokenContent);
+  console.log(tokenCtx);
   return (
     <Routes>
       <Route path="/" element={<StartPage />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/welcome" element={<Welcome />} />
-      <Route path="/home" element={<Home />} />
-      <Route path="/list/:lid" element={<MusicList />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/favs" element={<Favorite />} />
-      <Route path="/breath" element={<Breath />} />
-      <Route path="/premium" element={<Premium />} />
-      <Route path="*" element={<NotFound />} />
+      {tokenCtx.token && (
+        <>
+          <Route path="/welcome" element={<Welcome />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/list/:lid" element={<MusicList />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/favs" element={<Favorite />} />
+          <Route path="/breath" element={<Breath />} />
+          <Route path="/premium" element={<Premium />} />
+          <Route path="*" element={<NotFound />} />
+        </>
+      )}
     </Routes>
   );
 };

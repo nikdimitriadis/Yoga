@@ -1,22 +1,29 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useHttpClient } from "../hooks/http-hook";
 
 const TokenContent = React.createContext({
-  token: "",
+  token: null,
   login: () => {},
   logout: () => {},
   signup: () => {},
+  name: "",
 });
 
 export const TokenContentProvider = (props) => {
   const { isLoading, error, sendRequest } = useHttpClient();
   const [token, setToken] = useState(null);
+  const [name, setName] = useState(""); //test
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setToken(token);
+    }
+  }, []);
+
   const login = async (data) => {
-    console.log("login", data);
-    setToken("1");
     try {
       const responseData = await sendRequest(
         "http://localhost:5000/login",
@@ -27,20 +34,24 @@ export const TokenContentProvider = (props) => {
         }),
         { "Content-Type": "application/json" }
       );
+      console.log(responseData);
 
       if (responseData && !error) {
+        setName("Lia");
+        setToken(true);
+        localStorage.setItem("token", true);
         navigate("/welcome");
       }
     } catch (e) {}
   };
 
   const logout = (data) => {
-    console.log("logout", data);
+    // console.log("logout", data);
     setToken(null);
+    localStorage.removeItem("token");
+    navigate("/");
   };
   const signup = async (data) => {
-    console.log("signup", data);
-    setToken("1");
     try {
       const responseData = await sendRequest(
         "http://localhost:5000/login",
@@ -54,6 +65,10 @@ export const TokenContentProvider = (props) => {
       );
 
       if (responseData && !error) {
+        setName("Lia");
+        console.log(responseData);
+        setToken(true);
+        localStorage.setItem("token", true);
         navigate("/welcome");
       }
     } catch (e) {}
@@ -66,6 +81,7 @@ export const TokenContentProvider = (props) => {
     login,
     logout,
     signup,
+    name,
   };
 
   return (

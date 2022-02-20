@@ -1,6 +1,10 @@
+import { useContext } from "react";
+import TokenContent from "../../../store/token-provider";
 import classes from "./ProfilePic.module.css";
 
 const ProfilePic = (props) => {
+  const tokenCtx = useContext(TokenContent);
+  console.log(tokenCtx);
   return (
     <div className={classes.container}>
       <div>
@@ -9,7 +13,7 @@ const ProfilePic = (props) => {
           alt="face"
         />
       </div>
-      <h1>Leo</h1>
+      <h1>{`${tokenCtx.name}`}</h1>
     </div>
   );
 };
